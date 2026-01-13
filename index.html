@@ -3,9 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./styles/index.css">
-    <script src="./scripts/index.js" defer></script>
     <title>To do List</title>
+    <!-- Project CSS -->
+    <link rel="stylesheet" href="./styles/index.css">
+    <!-- Project JS -->
+    <script src="./scripts/index.js" defer></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
     <div class="todo-container">
@@ -19,7 +23,7 @@
             <div class="form-control">
                 <input type="text" id="todo-input" placeholder="O que você vai fazer?">
                 <button type="submit">
-                    +
+                    <i class="fa-solid fa-plus"></i>
                 </button>
             </div>
         </form>
@@ -28,10 +32,22 @@
             <div class="form-control">
                 <input type="text" id="edit-input">
                 <button type="submit">
-                    Edit
+                    <i class="fa-solid fa-check-double"></i>
                 </button>
             </div>
+            <button id="cancel-edit-btn">Cancelar</button>
         </form>
+        <div id="toolbar">
+            <div id="search">
+                <h4>Pesquisar:</h4>
+                <form>
+                    <input type="text" id="search-input" placeholder="Buscar">
+                    <button id="erase-button">
+                        <i class="fa-solid fa-delete-left"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
     </div>
 </body>
 </html>

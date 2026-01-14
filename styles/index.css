@@ -1,4 +1,49 @@
-.todo-container{
-    color:black; 
-    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif
+/* Geral */
+* {
+    padding: 0;
+    margin: 0;
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    color:black;
+    box-sizing: border-box;
 }
+body {
+  background-color:  #073b5e;
+}
+
+button {
+    background-color: #fdfdfd;
+    color: black;
+    border: 2px solid black;
+    padding: 0.3rem 0.6rem;
+    font-size: 1rem;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: 0.4s;
+}
+
+button:hover{
+    background-color: #04243a;
+    color: white
+}
+
+button:hover > i {
+    color: white;
+}
+
+button i {
+    color: #04243a;
+    font-weight: bold;
+    pointer-events: none;
+}
+
+input, 
+select {
+    padding: 0.3rem 0.5rem;
+}
+
+.hide{
+    display: none;
+}
+

@@ -5,11 +5,18 @@ const todoList = document.querySelector("#todo-list");
 const editForm = document.querySelector("#edit-form");
 const editInput = document.querySelector("#edit-input");
 const cancelEdition = document.querySelector("#cancel-edit-btn");
+const cleanSearch = document.querySelector("#erase-button");
+const searchInput = document.getElementById("search-input")
+const noResults = document.querySelector("#no-results")
+const filterSelect = document.querySelector("#filter-select")
+
+let oldInputValue;
 
 // Funções
 const saveTodo = (text) => {
     const todo = document.createElement("div")
-    todo.classList.add("todo")
+    todo.classList.add("todo");
+    todo.classList.add("pending");
 
     const todoTitle = document.createElement("h3")
     todoTitle.innerText = text
@@ -17,24 +24,52 @@ const saveTodo = (text) => {
 
     const doneBtn = document.createElement("button")
     doneBtn.classList.add("finish-todo")
-    doneBtn.innerHTML = '<i class="fa-solid fa-plus"></i>'
-    todo.appendChild(doneBtn)
+    doneBtn.innerHTML = '<i class="fa-solid fa-check"></i>'
+    todo.appendChild(doneBtn);
 
     const editBtn = document.createElement("button")
     editBtn.classList.add("edit-todo")
     editBtn.innerHTML = '<i class="fa-solid fa-pen"></i>'
-    todo.appendChild(editBtn)
+    todo.appendChild(editBtn);
 
     const deleteBtn = document.createElement("button")
     deleteBtn.classList.add("remove-todo")
     deleteBtn.innerHTML = '<i class="fa-solid fa-xmark"></i>'
-    todo.appendChild(deleteBtn)
+    todo.appendChild(deleteBtn);
 
     todoList.appendChild(todo);
 
     todoInput.value = ""
     todoInput.focus()
-}
+};
+
+const toggleForms = () => {
+    editForm.classList.toggle("hide");
+    todoForm.classList.toggle("hide");
+    todoList.classList.toggle("hide");
+};
+
+const updateTodo = (text) => {
+    const todos = document.querySelectorAll(".todo");
+
+    todos.forEach((todo) => {
+        let todoTitle = todo.querySelector("h3");
+
+        if (todoTitle.innerText === oldInputValue) {
+            todoTitle.innerText = text;      
+        }
+    });
+};
+
+const clean = () => {
+    const searchTitle = document.querySelector("#search-input")
+    searchTitle.value = "";
+    searchTitle.focus()
+};
+
+const formatString = (value) => {
+    return value.toLowerCase().trim();
+};
 
 // Eventos
 todoForm.addEventListener("submit", (e) =>{
@@ -42,6 +77,92 @@ todoForm.addEventListener("submit", (e) =>{
 
     const inputValue = todoInput.value;
     if(inputValue) {
-        saveTodo(inputValue)
+        saveTodo(inputValue);
     }
 }); 
+
+document.addEventListener("click", (e) => {
+    const targetEl = e.target;
+    const parentEl = targetEl.closest("div");
+    let todoTitle;
+
+    if (parentEl && parentEl.querySelector("h3")){
+        todoTitle = parentEl.querySelector("h3").innerText;
+    }
+
+    if (targetEl.classList.contains("finish-todo")) {
+        parentEl.classList.toggle("pending");
+        parentEl.classList.toggle("done");
+    }
+    
+    if (targetEl.classList.contains("remove-todo")) {
+        parentEl.remove();
+    }
+
+    if (targetEl.classList.contains("edit-todo")) {
+        toggleForms();
+
+        editInput.value = todoTitle;
+        oldInputValue = todoTitle;
+    }
+})
+
+cancelEdition.addEventListener("click", (e) => {
+    e.preventDefault();
+
+    toggleForms();
+})
+
+editForm.addEventListener("submit", (e) =>{
+    e.preventDefault()
+
+    const editInputValue = editInput.value
+
+    if (editInputValue) {
+        updateTodo(editInputValue)
+    }
+
+    toggleForms()
+})
+
+cleanSearch.addEventListener("click", (e) =>{
+    e.preventDefault()
+
+    clean()
+})
+
+searchInput.addEventListener("input", (e) => {
+    const value = formatString(e.target.value)
+    let counter = 0;
+    const todos = document.querySelectorAll("#todo-list .todo");
+
+    todos.forEach(item => {
+        if(formatString(item.querySelector("h3").textContent).indexOf(value) !== -1){
+            item.style.display = 'flex';
+            counter += 1;
+        } else {
+            item.style.display = 'none'
+        }
+    });
+
+    if (counter === 0) {
+        noResults.classList.remove("hide")
+    } else {
+        noResults.classList.add("hide")
+    }
+})
+
+filterSelect.addEventListener("change", (e) => {
+    const value = e.target.value;
+    const items = document.querySelectorAll("#todo-list .todo");
+
+    items.forEach(todo => {
+        if (value === "all") {
+            todo.style.display = "flex";
+        } else if (todo.classList.contains(value)) {
+            todo.style.display = "flex";
+        } else {
+            todo.style.display = "none";
+        }
+    })
+})

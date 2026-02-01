@@ -12,16 +12,19 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
-    <div class="todo-container">
+    <div class="container">
         <header>
             <h1>
                 To do List
             </h1>
         </header>
-        <form id="todo-form">
+        <form id="form">
             <p>Adicione sua tarefa:</p>
             <div class="form-control">
-                <input type="text" id="todo-input" placeholder="O que você vai fazer?">
+                <div class="form-text">
+                    <input type="text" id="input" placeholder="O que você vai fazer?" required>
+                    <input type="text" id="description" placeholder="Adicione uma descrição!">
+                </div>
                 <button type="submit">
                     <i class="fa-solid fa-plus"></i>
                 </button>
@@ -30,7 +33,10 @@
         <form id="edit-form" class="hide">
             <p>Edite a sua tarefa:</p>
             <div class="form-control">
-                <input type="text" id="edit-input">
+                <div class="form-text">
+                    <input type="text" id="edit-input">
+                    <input type="text" id="edit-description">
+                </div>
                 <button type="submit">
                     <i class="fa-solid fa-check-double"></i>
                 </button>
@@ -56,18 +62,40 @@
                 </select>
             </div>
         </div>
-        <div id="todo-list">
+        <div id="list">
+            <div class="todo pending">
+                <div class="text">
+                    <h3>Ver email</h3>
+                    <p>Procurar email PICME</p>
+                </div>
+                <div class="buttons">
+                    <button class="finish">
+                        <i class="fa-solid fa-check"></i>
+                    </button>
+                    <button class="edit">
+                        <i class="fa-solid fa-pen"></i>
+                    </button>
+                    <button class="remove">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+            </div>
             <div class="todo done">
-                <h3>Estou fazendo algo...</h3>
-                <button class="finish-todo">
-                    <i class="fa-solid fa-check"></i>
-                </button>
-                <button class="edit-todo">
-                    <i class="fa-solid fa-pen"></i>
-                </button>
-                <button class="remove-todo">
-                    <i class="fa-solid fa-xmark"></i>
-                </button>
+                <div class="text">
+                    <h3>Ver email</h3>
+                    <p>Procurar email PICME</p>
+                </div>
+                <div class="buttons">
+                    <button class="finish">
+                        <i class="fa-solid fa-check"></i>
+                    </button>
+                    <button class="edit">
+                        <i class="fa-solid fa-pen"></i>
+                    </button>
+                    <button class="remove">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
             </div>
         </div>
         <div id="no-results" class="hide">

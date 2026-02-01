@@ -1,7 +1,8 @@
 // Seleção de elementos
-const todoForm = document.querySelector("#todo-form");
-const todoInput= document.querySelector("#todo-input");
-const todoList = document.querySelector("#todo-list");
+const form = document.querySelector("#form");
+const input= document.querySelector("#input");
+const list = document.querySelector("#list");
+const description = document.querySelector("#description")
 const editForm = document.querySelector("#edit-form");
 const editInput = document.querySelector("#edit-input");
 const cancelEdition = document.querySelector("#cancel-edit-btn");
@@ -13,50 +14,63 @@ const filterSelect = document.querySelector("#filter-select")
 let oldInputValue;
 
 // Funções
-const saveTodo = (text) => {
+const saveTodo = (text1, text2) => {
     const todo = document.createElement("div")
     todo.classList.add("todo");
     todo.classList.add("pending");
 
-    const todoTitle = document.createElement("h3")
-    todoTitle.innerText = text
-    todo.appendChild(todoTitle);
+    const text = document.createElement("div")
+    text.classList.add("text")
+
+    const title = document.createElement("h3")
+    title.innerText = text1
+    text.appendChild(title);
+
+    const todoDescription = document.createElement("p")
+    todoDescription.innerText = text2
+    text.appendChild(todoDescription);
+
+    const buttons = document.createElement("div")
+    buttons.classList.add("buttons");
 
     const doneBtn = document.createElement("button")
-    doneBtn.classList.add("finish-todo")
+    doneBtn.classList.add("finish")
     doneBtn.innerHTML = '<i class="fa-solid fa-check"></i>'
-    todo.appendChild(doneBtn);
+    buttons.appendChild(doneBtn);
 
     const editBtn = document.createElement("button")
-    editBtn.classList.add("edit-todo")
+    editBtn.classList.add("edit")
     editBtn.innerHTML = '<i class="fa-solid fa-pen"></i>'
-    todo.appendChild(editBtn);
+    buttons.appendChild(editBtn);
 
     const deleteBtn = document.createElement("button")
-    deleteBtn.classList.add("remove-todo")
+    deleteBtn.classList.add("remove")
     deleteBtn.innerHTML = '<i class="fa-solid fa-xmark"></i>'
-    todo.appendChild(deleteBtn);
+    buttons.appendChild(deleteBtn);
 
-    todoList.appendChild(todo);
+    todo.appendChild(text);
+    todo.appendChild(buttons);
+    list.appendChild(todo);
 
-    todoInput.value = ""
-    todoInput.focus()
+    input.value = ""
+    description.value = ""
+    input.focus()
 };
 
 const toggleForms = () => {
     editForm.classList.toggle("hide");
-    todoForm.classList.toggle("hide");
-    todoList.classList.toggle("hide");
+    form.classList.toggle("hide");
+    list.classList.toggle("hide");
 };
 
-const updateTodo = (text) => {
+const updateTodo = (title, subtitle) => {
     const todos = document.querySelectorAll(".todo");
 
     todos.forEach((todo) => {
-        let todoTitle = todo.querySelector("h3");
+        let title = todo.querySelector("h3");
 
-        if (todoTitle.innerText === oldInputValue) {
-            todoTitle.innerText = text;      
+        if (title.innerText === oldInputValue) {
+            title.innerText = title;      
         }
     });
 };
@@ -72,38 +86,42 @@ const formatString = (value) => {
 };
 
 // Eventos
-todoForm.addEventListener("submit", (e) =>{
+form.addEventListener("submit", (e) =>{
     e.preventDefault();
 
-    const inputValue = todoInput.value;
+    const inputValue = input.value;
+    const descValue = description.value;
     if(inputValue) {
-        saveTodo(inputValue);
+        saveTodo(inputValue, descValue);
     }
 }); 
 
+// PARA FAZER URGENTEMENTE!!!!!!!!!!!!
 document.addEventListener("click", (e) => {
     const targetEl = e.target;
-    const parentEl = targetEl.closest("div");
-    let todoTitle;
+    const parentEl = targetEl.closest(".todo");
+    
+    let title_current;
+    let desc_current;
 
     if (parentEl && parentEl.querySelector("h3")){
-        todoTitle = parentEl.querySelector("h3").innerText;
+        title_current = parentEl.querySelector("h3").innerText;
+        desc_current = parentEl.querySelector("p").innerText;
     }
 
-    if (targetEl.classList.contains("finish-todo")) {
-        parentEl.classList.toggle("pending");
+    if (targetEl.classList.contains("finish")) {
         parentEl.classList.toggle("done");
     }
     
-    if (targetEl.classList.contains("remove-todo")) {
-        parentEl.remove();
+    if (targetEl.classList.contains("remove")) {
+       parentEl.remove();
     }
 
-    if (targetEl.classList.contains("edit-todo")) {
+    if (targetEl.classList.contains("edit")) {
         toggleForms();
 
-        editInput.value = todoTitle;
-        oldInputValue = todoTitle;
+        editInput.value = title_current;
+        oldInputValue = title_current;
     }
 })
 
@@ -127,14 +145,20 @@ editForm.addEventListener("submit", (e) =>{
 
 cleanSearch.addEventListener("click", (e) =>{
     e.preventDefault()
-
     clean()
+
+    const todos = document.querySelectorAll("#list .todo");
+    noResults.classList.add("hide");
+    todos.forEach(item => {
+        item.style.display = 'flex'
+    });
+    
 })
 
 searchInput.addEventListener("input", (e) => {
     const value = formatString(e.target.value)
     let counter = 0;
-    const todos = document.querySelectorAll("#todo-list .todo");
+    const todos = document.querySelectorAll("#list .todo");
 
     todos.forEach(item => {
         if(formatString(item.querySelector("h3").textContent).indexOf(value) !== -1){
@@ -154,7 +178,7 @@ searchInput.addEventListener("input", (e) => {
 
 filterSelect.addEventListener("change", (e) => {
     const value = e.target.value;
-    const items = document.querySelectorAll("#todo-list .todo");
+    const items = document.querySelectorAll("#list .todo");
 
     items.forEach(todo => {
         if (value === "all") {

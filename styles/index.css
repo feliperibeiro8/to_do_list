@@ -54,7 +54,7 @@ select {
 }
 
 /* Todo header */
-.todo-container {
+.container {
     max-width: 450px;
     margin: 3rem auto 0;
     background-color: #fdfdfd;
@@ -62,19 +62,19 @@ select {
     border-radius: 15px;
 }
 
-.todo-container header{
+.container header{
     text-align: center;
     padding: 0 1rem 1rem;
     border-bottom: 1px solid #ccc;
 }
 
 /* Todo Form */
-#todo-form, #edit-form{
+#form, #edit-form{
     padding: 1rem;
     border-bottom: 1px solid #ccc;
 }
 
-#todo-form p, #edit-form p{
+#form p, #edit-form p{
     margin-bottom: 0.5rem;
     font-weight: bold;
 }
@@ -83,8 +83,15 @@ select {
     display: flex;
 }
 
-.form-control input{
-    margin-right: 0.3rem;
+.form-control button{
+    margin-left: 0.5rem;
+    height: 1.8rem;
+}
+
+.form-text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
 }
 
 #cancel-edit-btn{
@@ -141,9 +148,24 @@ select {
     transition: .3s;
 }
 
+.text{
+    display: flex;
+    flex-direction: column;
+}
+
 .todo h3{
     flex: 1;
     font-size: 0.9rem;
+}
+
+.todo p{
+    font-size: 0.7rem;
+    margin-top: 5px;
+}
+
+.buttons {
+    display: flex;
+    gap: 5px;
 }
 
 .todo button {
@@ -158,6 +180,12 @@ select {
     color: #fff;
     text-decoration: line-through;
     font-style: italic;
+}
+
+.done p{
+    color: #fff;
+    text-decoration: line-through;
+    font-style: italic; 
 }
 
 #no-results h3 {

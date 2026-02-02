@@ -4,14 +4,16 @@ const input= document.querySelector("#input");
 const list = document.querySelector("#list");
 const description = document.querySelector("#description")
 const editForm = document.querySelector("#edit-form");
-const editInput = document.querySelector("#edit-input");
+const editTitle = document.querySelector("#edit-title");
+const editDesc = document.querySelector("#edit-description");
 const cancelEdition = document.querySelector("#cancel-edit-btn");
 const cleanSearch = document.querySelector("#erase-button");
 const searchInput = document.getElementById("search-input")
 const noResults = document.querySelector("#no-results")
 const filterSelect = document.querySelector("#filter-select")
 
-let oldInputValue;
+let oldTitleValue;
+let oldDescValue;
 
 // Funções
 const saveTodo = (text1, text2) => {
@@ -67,10 +69,12 @@ const updateTodo = (title, subtitle) => {
     const todos = document.querySelectorAll(".todo");
 
     todos.forEach((todo) => {
-        let title = todo.querySelector("h3");
+        let input = todo.querySelector("h3");
+        let desc = todo.querySelector("p");
 
-        if (title.innerText === oldInputValue) {
-            title.innerText = title;      
+        if (input.innerText === oldTitleValue && desc.innerText === oldDescValue) {
+            input.innerText = title;  
+            desc.innerText = subtitle;    
         }
     });
 };
@@ -96,7 +100,6 @@ form.addEventListener("submit", (e) =>{
     }
 }); 
 
-// PARA FAZER URGENTEMENTE!!!!!!!!!!!!
 document.addEventListener("click", (e) => {
     const targetEl = e.target;
     const parentEl = targetEl.closest(".todo");
@@ -120,8 +123,10 @@ document.addEventListener("click", (e) => {
     if (targetEl.classList.contains("edit")) {
         toggleForms();
 
-        editInput.value = title_current;
-        oldInputValue = title_current;
+        editTitle.value = title_current;
+        editDesc.value = desc_current;
+        oldTitleValue = title_current;
+        oldDescValue = desc_current;
     }
 })
 
@@ -134,10 +139,11 @@ cancelEdition.addEventListener("click", (e) => {
 editForm.addEventListener("submit", (e) =>{
     e.preventDefault()
 
-    const editInputValue = editInput.value
+    const editTitleValue = editTitle.value
+    const editDescValue = editDesc.value
 
-    if (editInputValue) {
-        updateTodo(editInputValue)
+    if (editTitleValue) {
+        updateTodo(editTitleValue, editDescValue)
     }
 
     toggleForms()
